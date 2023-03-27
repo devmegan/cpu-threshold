@@ -4,6 +4,11 @@ program_name=$1
 
 logfile="logfile.txt"
 
+if [ -e "$logfile" ]; then
+    echo "-----" >> $logfile
+    echo >> $logfile
+fi
+
 echo -e "CPU threshold monitor for $program_name running being written to \e]8;;file://$(pwd)/$logfile\a$logfile\e]8;;\a"
 echo
 
