@@ -6,6 +6,8 @@ I wrote it because teams is often exceeding 100% or 200% for long periods of tim
 
 - [Usage](#usage)
 - [Example logfile](#example-logfile)
+- [Releases](#releases)
+    - [v1](#v1)
 
 ## Usage
 
@@ -38,3 +40,9 @@ Usage will be logged where it exceeds 100% for a minimum of 5 seconds
 [2023-03-28 12:04:52] CPU usage dropped below 100%
 
 ```
+
+## Releases
+
+### v1
+
+- [v1.0.0 CPU Threshold Monitor Initial Script Release](https://github.com/devmegan/cpu-threshold/releases/tag/v.1.0.0) (23-03-28)
