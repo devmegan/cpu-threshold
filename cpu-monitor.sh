@@ -1,6 +1,7 @@
 #!/bin/bash
 
 program_name=$1
+threshold=${2:-100}
 
 logfile="logfile.txt"
 
@@ -10,12 +11,13 @@ if [ -e "$logfile" ]; then
 fi
 
 echo -e "CPU threshold monitor for $program_name running being written to \e]8;;file://$(pwd)/$logfile\a$logfile\e]8;;\a"
+echo "Usage will be logged where it exceeds $threshold% for a minimum of 5 seconds"
 
 echo "CPU threshold monitor for $program_name [$(date '+%Y-%m-%d %H:%M:%S')]:" >> $logfile
+echo "Usage will be logged where it exceeds $threshold% for a minimum of 5 seconds" >> $logfile
 echo >> $logfile
 
 count=0
-threshold=100
 over_threshold=false
 
 for (( ; ; )); do
@@ -32,7 +34,7 @@ for (( ; ; )); do
         count=0
 
         if $over_threshold; then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] CPU usage dropped below 100%" >> logfile.txt
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] CPU usage dropped below $threshold%" >> logfile.txt
             echo >> logfile.txt
             over_threshold=false
         fi
