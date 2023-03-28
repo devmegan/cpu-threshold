@@ -1,8 +1,31 @@
 #!/bin/bash
 
+usage="Usage: $0 <program_name:str> [threshold:flt]"
+
+if [[ $# -lt 1 ]]; then
+    echo "$0 requires at least 1 argument"
+    echo
+    echo $usage
+
+    exit 1
+fi
+
+if ! pgrep "$1" > /dev/null; then
+  echo "Error: Can't find an active process named '$1'"
+
+  exit 1
+fi
+
+if [[ -n "$2" ]] && (( $(echo "$2 <= 0.009" | bc -l) )); then
+    echo "Error: Threshold value must be at least 0.01"
+    echo
+    echo $usage
+
+    exit 1
+fi
+
 program_name=$1
 threshold=${2:-100}
-
 logfile="logfile.txt"
 
 if [ -e "$logfile" ]; then
@@ -20,7 +43,7 @@ echo >> $logfile
 count=0
 over_threshold=false
 
-for (( ; ; )); do
+while true; do
     cpu_usage=$(top -b -n 1 | grep -m1 $program_name | awk '{printf $9}')
 
     if (( $(echo "$cpu_usage >= $threshold" | bc -l) )); then
